@@ -7,18 +7,10 @@
 #include <arch/arm/aarch32/exc.h>
 #include <fatal.h>
 #include <drivers/sensor.h>
+#include "altimeter_sensor.h"
+#include "sensor_float.h"
+#include <stdio.h>
 LOG_MODULE_REGISTER(cdc_acm_echo, LOG_LEVEL_DBG);
-
-#define HTS221 DT_INST(0, st_hts221)
-
-#if DT_NODE_HAS_STATUS(HTS221, okay)
-#define HTS221_LABEL DT_LABEL(HTS221)
-#else
-#error Your devicetree has no enabled nodes with compatible "st_lps22hb_press"
-#define LPS22HB_LABEL "<none>"
-#endif
-
-
 
 static struct arduino_gpio_t gpio;
 
@@ -31,24 +23,17 @@ void main() {
 	usb_enable(NULL);
 
 	// pull in the sensors
-	const struct device *tempSensor = device_get_binding(HTS221_LABEL);
-	const struct sensor_value temperature;
-	if(!tempSensor) {
-		while(1) {
-			printk("Failed to get device\n");
-			k_sleep(K_SECONDS(5));
-		}
-	}
-
+	struct altimeter_sensor altimeter;
+	altimeter_sensor_init(&altimeter);
 
 	bool ledOn = false;
 	while(1) {
 		ledOn = !ledOn;
 		arduino_gpio_digitalWrite(&gpio, ARDUINO_LEDR, ledOn);
-		sensor_sample_fetch(tempSensor);
-		sensor_channel_get(tempSensor, SENSOR_CHAN_AMBIENT_TEMP, &temperature);
+		altimeter_sensor_update(&altimeter);
+		float alt = sensor_val_to_float(&altimeter.altitude);
 
-		printk("in Centigrade: %ld.%ld\n", temperature.val1, temperature.val2);
+		printf("Altitude: %f (m)\n", alt);
 
 		k_sleep(K_SECONDS(1));
 	}
