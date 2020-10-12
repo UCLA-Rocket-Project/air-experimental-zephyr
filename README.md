@@ -8,6 +8,7 @@ This repo includes the source code as well as:
 ## Instructions
 ### Setup
 1. Follow these instructions to setup Zephyr: https://docs.zephyrproject.org/latest/getting_started/index.html
+**WINDOWS USERS** make sure you install it in WSL.
 1. Follow these instructions to steal a copy of BOSSAC: [instructions](boards/arm/arduino_nano_33_ble/doc/index.rst)
 Make sure you add it into your OS's PATH variable
 
