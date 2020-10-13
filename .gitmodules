@@ -1,0 +1,3 @@
+[submodule "boards/arm/arduino_nano_33_ble"]
+	path = boards/arm/arduino_nano_33_ble
+	url = https://github.com/saltyJeff/zephyr_arduino_nano_33_ble.git

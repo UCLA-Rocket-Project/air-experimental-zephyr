@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <kernel.h>
 
-enum TELEMETRY_FIELD: uint8_t {
+enum TELEMETRY_FIELD {
 	X_ACCEL,
 	Y_ACCEL,
 	Z_ACCEL,
