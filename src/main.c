@@ -1,5 +1,4 @@
 #include <device.h>
-#include <devicetree.h>
 #include <logging/log.h>
 #include <usb/usb_device.h>
 #include <arduino_nano_33_ble.h>
@@ -10,7 +9,7 @@
 #include "altimeter_sensor.h"
 #include "sensor_float.h"
 #include <stdio.h>
-LOG_MODULE_REGISTER(cdc_acm_echo, LOG_LEVEL_DBG);
+LOG_MODULE_REGISTER(main_loop, LOG_LEVEL_DBG);
 
 static struct arduino_gpio_t gpio;
 
